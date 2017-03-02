@@ -106,7 +106,7 @@ n_greater_50k = data[data.income=='>50K'].shape[0]
 n_at_most_50k = data[data.income=='<=50K'].shape[0]
 
 # TODO: Percentage of individuals whose income is more than $50,000
-greater_percent = n_greater_50k/float(n_records)
+greater_percent = n_greater_50k/float(n_records)*100
 
 # Print the results
 print "Total number of records: {}".format(n_records)
@@ -118,7 +118,7 @@ print "Percentage of individuals making more than $50,000: {:.2f}%".format(great
     Total number of records: 45222
     Individuals making more than $50,000: 11208
     Individuals making at most $50,000: 34014
-    Percentage of individuals making more than $50,000: 0.25%
+    Percentage of individuals making more than $50,000: 24.78%
     
 
 ----
@@ -382,7 +382,7 @@ def train_predict(learner, sample_size, X_train, y_train, X_test, y_test):
     # TODO: Get the predictions on the test set,
     #       then get predictions on the first 300 training samples
     start = time() # Get start time
-    predictions_test = learner.predict(X_test[:sample_size])
+    predictions_test = learner.predict(X_test)
     predictions_train = learner.predict(X_train[:300])
     end = time() # Get end time
     
@@ -393,13 +393,13 @@ def train_predict(learner, sample_size, X_train, y_train, X_test, y_test):
     results['acc_train'] = accuracy_score(y_train[:300], predictions_train)
         
     # TODO: Compute accuracy on test set
-    results['acc_test'] = accuracy_score(y_test[:sample_size], predictions_test)
+    results['acc_test'] = accuracy_score(y_test, predictions_test)
     
     # TODO: Compute F-score on the the first 300 training samples
     results['f_train'] = fbeta_score(y_train[:300], predictions_train, beta=0.5)
         
     # TODO: Compute F-score on the test set
-    results['f_test'] = fbeta_score(y_test[:sample_size], predictions_test, beta=0.5)
+    results['f_test'] = fbeta_score(y_test, predictions_test, beta=0.5)
        
     # Success
     print "{} trained on {} samples.".format(learner.__class__.__name__, sample_size)
